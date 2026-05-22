@@ -1,0 +1,152 @@
+{
+  "Config": [
+    {
+      "key": "appName",
+      "value": "AI Trading Ops",
+      "updatedAt": "2026-05-22T12:00:00.000Z"
+    }
+  ],
+  "Users": [
+    {
+      "userEmail": "__APP_ADMIN_EMAIL__",
+      "fullName": "AI Trading Ops Admin",
+      "role": "admin",
+      "accessStatus": "active",
+      "accessType": "admin",
+      "paypalSubscriptionId": "",
+      "paypalCustomerEmail": "",
+      "subscriptionStatus": "",
+      "accessExpiresAt": "",
+      "createdAt": "2026-05-22T12:00:00.000Z",
+      "updatedAt": "2026-05-22T12:00:00.000Z",
+      "notes": "Seeded first admin for AI Trading Ops."
+    }
+  ],
+  "User_Settings": [
+    {
+      "userEmail": "__APP_ADMIN_EMAIL__",
+      "settingKey": "defaultTradingViewSymbol",
+      "settingValue": "NASDAQ:AAPL",
+      "updatedAt": "2026-05-22T12:00:00.000Z"
+    },
+    {
+      "userEmail": "__APP_ADMIN_EMAIL__",
+      "settingKey": "preferredChartTheme",
+      "settingValue": "dark",
+      "updatedAt": "2026-05-22T12:00:00.000Z"
+    },
+    {
+      "userEmail": "__APP_ADMIN_EMAIL__",
+      "settingKey": "preferredChartInterval",
+      "settingValue": "D",
+      "updatedAt": "2026-05-22T12:00:00.000Z"
+    }
+  ],
+  "Watchlist": [
+    {
+      "userEmail": "__APP_ADMIN_EMAIL__",
+      "ticker": "AAPL",
+      "assetType": "Stock",
+      "sector": "Technology",
+      "strategy": "Momentum Breakout",
+      "active": "true",
+      "notes": "Watch for reclaim of prior high with volume confirmation.",
+      "createdAt": "2026-05-22T12:00:00.000Z",
+      "updatedAt": "2026-05-22T12:00:00.000Z"
+    },
+    {
+      "userEmail": "__APP_ADMIN_EMAIL__",
+      "ticker": "NVDA",
+      "assetType": "Stock",
+      "sector": "Semiconductors",
+      "strategy": "Pullback",
+      "active": "true",
+      "notes": "Prefer clean support hold before adding risk.",
+      "createdAt": "2026-05-22T12:00:00.000Z",
+      "updatedAt": "2026-05-22T12:00:00.000Z"
+    }
+  ],
+  "Signals": [
+    {
+      "signalId": "sig_seed_001",
+      "userEmail": "__APP_ADMIN_EMAIL__",
+      "timestamp": "2026-05-22T12:00:00.000Z",
+      "ticker": "AAPL",
+      "exchange": "NASDAQ",
+      "price": "225.40",
+      "direction": "buy",
+      "setupType": "Momentum Breakout",
+      "confidenceScore": "78",
+      "riskRating": "Medium",
+      "notes": "Seed signal for dashboard verification.",
+      "status": "new",
+      "source": "seed"
+    }
+  ],
+  "Trades": [
+    {
+      "tradeId": "trd_seed_001",
+      "userEmail": "__APP_ADMIN_EMAIL__",
+      "date": "2026-05-22",
+      "ticker": "SPY",
+      "direction": "long",
+      "entry": "530.00",
+      "stopLoss": "525.00",
+      "target": "540.00",
+      "exit": "",
+      "pnl": "0",
+      "status": "open",
+      "lesson": "Seed open trade for risk and dashboard tables.",
+      "createdAt": "2026-05-22T12:00:00.000Z",
+      "updatedAt": "2026-05-22T12:00:00.000Z"
+    }
+  ],
+  "Risk_Log": [
+    {
+      "riskId": "risk_seed_001",
+      "userEmail": "__APP_ADMIN_EMAIL__",
+      "timestamp": "2026-05-22T12:00:00.000Z",
+      "exposure": "530",
+      "dailyLoss": "0",
+      "maxRiskPerTrade": "1%",
+      "openPositions": "1",
+      "warnings": "Seed status: risk stable.",
+      "status": "stable"
+    }
+  ],
+  "Alerts_Log": [
+    {
+      "alertId": "alert_seed_001",
+      "userEmail": "__APP_ADMIN_EMAIL__",
+      "timestamp": "2026-05-22T12:00:00.000Z",
+      "ticker": "AAPL",
+      "eventType": "SEED_ALERT",
+      "message": "Seed alert for dashboard summary.",
+      "source": "seed",
+      "payload": "{}"
+    }
+  ],
+  "Journal": [
+    {
+      "journalId": "jrnl_seed_001",
+      "userEmail": "__APP_ADMIN_EMAIL__",
+      "date": "2026-05-22",
+      "ticker": "SPY",
+      "category": "Execution",
+      "tags": "seed,process",
+      "content": "Seed journal entry. Review execution quality after close.",
+      "aiSummary": "AI summary placeholder. Connect model workflow later.",
+      "status": "draft",
+      "createdAt": "2026-05-22T12:00:00.000Z",
+      "updatedAt": "2026-05-22T12:00:00.000Z"
+    }
+  ],
+  "Dashboard": [
+    {
+      "userEmail": "__APP_ADMIN_EMAIL__",
+      "metricKey": "seeded",
+      "metricValue": "true",
+      "updatedAt": "2026-05-22T12:00:00.000Z"
+    }
+  ]
+}
