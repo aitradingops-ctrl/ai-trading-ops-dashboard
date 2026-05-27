@@ -8,7 +8,12 @@ export function SignInButton({ callbackUrl = "/dashboard" }: { callbackUrl?: str
   return (
     <Button
       type="button"
-      onClick={() => signIn("google", { callbackUrl })}
+      onClick={() =>
+        signIn("google", {
+          callbackUrl,
+          prompt: "select_account",
+        })
+      }
       className="w-full"
     >
       Continue with Google

@@ -33,6 +33,7 @@ Public values that are safe to expose client-side:
 - `NEXT_PUBLIC_PROJECT_DRIVE_URL="https://drive.google.com/drive/folders/1H__9S7AdYV5d4XYw6hSqN-QDXInXEF2Q?usp=sharing"`
 - `NEXT_PUBLIC_TRADING_CALENDAR_URL="https://calendar.google.com/calendar/u/2?cid=YjFjNmU3N2VhYjI3Yjk0OTA2NDRjMWQ0MWI1NDI4M2Q2NzhmY2FjZmZjZTQyZGIyNTVjYmUxMzJmZmY3NTBmYUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t"`
 - `NEXT_PUBLIC_TRADING_CALENDAR_ID="b1c6e77eab27b9490644c1d41b54283d678fcacffce42db255cbe132fff750fa@group.calendar.google.com"`
+- `NEXT_PUBLIC_GOOGLE_CHAT_URL="https://chat.google.com/u/2/app/chat/AAQA_c_Zwls"`
 
 Server-only secrets and access-control values:
 
@@ -45,6 +46,7 @@ Server-only secrets and access-control values:
 - `GOOGLE_SHEET_ID`
 - `APP_ADMIN_EMAIL=aitradingops@gmail.com`
 - `ALLOWED_LOGIN_EMAIL=aitradingops@gmail.com`
+- `ALLOWED_LOGIN_EMAILS=aitradingops@gmail.com`
 - `PAYPAL_CLIENT_ID`
 - `PAYPAL_CLIENT_SECRET`
 - `PAYPAL_WEBHOOK_ID`
@@ -119,6 +121,16 @@ Calendar sharing link:
 https://calendar.google.com/calendar/u/2?cid=YjFjNmU3N2VhYjI3Yjk0OTA2NDRjMWQ0MWI1NDI4M2Q2NzhmY2FjZmZjZTQyZGIyNTVjYmUxMzJmZmY3NTBmYUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t
 ```
 
+## Google Chat
+
+The `/chat` page, sidebar navigation, and `/dashboard` quick actions open the shared Chat space in a new browser tab.
+
+Chat link:
+
+```text
+https://chat.google.com/u/2/app/chat/AAQA_c_Zwls
+```
+
 ## PayPal Subscription Setup
 
 1. Create a PayPal REST app.
@@ -155,24 +167,32 @@ Admins can visit `/admin/users` to:
 - Remove access
 - Open the Project Drive admin resource
 
+To add another admin directly in the `Users` sheet, add or update the row for their exact Google account email with:
+
+```text
+role = admin
+accessStatus = active
+accessType = admin
+```
+
 Suspended users are blocked. Inactive users are blocked. If PayPal is cancelled or payment fails, paid access is removed unless the user also has admin or manual-grant access.
 
-## Temporary Login Restriction
+## Login Access Control
 
-For now, only `aitradingops@gmail.com` can access the private app after Google login. This is enforced in the NextAuth sign-in callback with:
+Google login is allowed when the email matches one of the configured bootstrap emails or has access in the `Users` sheet. This is enforced in the NextAuth sign-in callback with:
 
 - `TEMP_ALLOWED_LOGIN_EMAIL=aitradingops@gmail.com` in code
-- `ALLOWED_LOGIN_EMAIL=aitradingops@gmail.com` as the environment fallback override
+- `ALLOWED_LOGIN_EMAIL=aitradingops@gmail.com` as the legacy single-email override
+- `ALLOWED_LOGIN_EMAILS=aitradingops@gmail.com,second-admin@example.com` as an optional comma-separated bootstrap list
+- the `Users` sheet, where active manual users, active paid users, and admin rows can sign in
 
-Any other Google account is redirected back to `/login` and shown:
+A Google account without a matching bootstrap email or eligible `Users` row is redirected back to `/login` and shown:
 
 ```text
 Access is currently restricted. Please contact AI Trading Ops support.
 ```
 
-Other Google logins are blocked before a session is created, so regular paid-user rows are not created yet. PayPal subscribe buttons remain visible on `/` and `/pricing`, but subscription access can stay inactive until the admin enables broader access.
-
-Later this restriction can be changed to allow paid users, manual users, and admin-approved users through the existing Users tab access-control rules.
+PayPal subscribe buttons remain visible on `/` and `/pricing`, but subscription access can stay inactive until the admin enables broader access.
 
 ## TradingView Integration
 

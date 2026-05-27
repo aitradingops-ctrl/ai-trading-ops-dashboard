@@ -14,6 +14,7 @@ const navItems = [
   { href: "/risk", label: "Risk" },
   { href: "/journal", label: "Journal" },
   { href: "/calendar", label: "Calendar" },
+  { href: "/chat", label: "Chat" },
   { href: "/settings", label: "Settings" },
 ];
 

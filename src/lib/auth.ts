@@ -8,6 +8,11 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      authorization: {
+        params: {
+          prompt: "select_account",
+        },
+      },
     }),
   ],
   pages: {
@@ -21,7 +26,7 @@ export const authOptions: NextAuthOptions = {
     async signIn({ profile, user }) {
       const email = user.email || profile?.email;
 
-      if (isAllowedLoginEmail(email)) {
+      if (await isAllowedLoginEmail(email)) {
         return true;
       }
 

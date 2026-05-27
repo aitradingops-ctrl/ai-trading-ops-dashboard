@@ -9,6 +9,7 @@ const PRIVATE_PREFIXES = [
   "/risk",
   "/journal",
   "/calendar",
+  "/chat",
   "/settings",
   "/admin",
 ];
@@ -45,6 +46,7 @@ export const config = {
     "/risk/:path*",
     "/journal/:path*",
     "/calendar/:path*",
+    "/chat/:path*",
     "/settings/:path*",
     "/admin/:path*",
   ],

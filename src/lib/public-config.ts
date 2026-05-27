@@ -10,6 +10,9 @@ export const publicConfig = {
   tradingCalendarId:
     process.env.NEXT_PUBLIC_TRADING_CALENDAR_ID ||
     "b1c6e77eab27b9490644c1d41b54283d678fcacffce42db255cbe132fff750fa@group.calendar.google.com",
+  googleChatUrl:
+    process.env.NEXT_PUBLIC_GOOGLE_CHAT_URL ||
+    "https://chat.google.com/u/2/app/chat/AAQA_c_Zwls",
 } as const;
 
 export function getTradingCalendarEmbedUrl(): string {

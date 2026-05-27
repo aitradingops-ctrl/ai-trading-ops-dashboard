@@ -27,7 +27,7 @@ export default async function DashboardPage() {
         description="KPIs, current risk status, latest signals, alerts, open trades, project resources, and a TradingView chart configured from your settings."
       />
 
-      <div className="mb-6 grid gap-4 md:grid-cols-2">
+      <div className="mb-6 grid gap-4 md:grid-cols-3">
         <Card className="p-5">
           <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
             Quick action
@@ -62,6 +62,24 @@ export default async function DashboardPage() {
             className="mt-4 inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-700 bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-800"
           >
             Open Trading Calendar
+          </a>
+        </Card>
+        <Card className="p-5">
+          <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+            Team chat
+          </p>
+          <h2 className="mt-3 text-lg font-semibold text-white">Google Chat</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-400">
+            Open the shared Google Chat space for account questions, trading
+            notes, and admin coordination.
+          </p>
+          <a
+            href={publicConfig.googleChatUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-4 inline-flex min-h-10 items-center justify-center rounded-xl border border-emerald-400/30 bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300"
+          >
+            Open Google Chat
           </a>
         </Card>
       </div>

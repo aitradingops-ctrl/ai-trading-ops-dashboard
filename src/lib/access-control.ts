@@ -39,6 +39,10 @@ export function normalizeEmail(email: string): string {
   return email.trim().toLowerCase();
 }
 
+function normalizeAccessValue(value: string): string {
+  return value.trim().toLowerCase();
+}
+
 function adminEmail(): string {
   return normalizeEmail(getOptionalEnv("APP_ADMIN_EMAIL") || DEFAULT_ADMIN_EMAIL);
 }
@@ -99,7 +103,7 @@ export async function getSessionUser(): Promise<SessionUser | null> {
     return null;
   }
 
-  if (!isAllowedLoginEmail(email)) {
+  if (!(await isAllowedLoginEmail(email))) {
     return null;
   }
 
@@ -165,7 +169,7 @@ export async function ensureUserProfile(
 ): Promise<UserRecord> {
   const userEmail = normalizeEmail(email);
 
-  if (!isAllowedLoginEmail(userEmail)) {
+  if (!(await isAllowedLoginEmail(userEmail))) {
     throw new Error(
       "Access is currently restricted. Please contact AI Trading Ops support.",
     );
@@ -199,12 +203,16 @@ export function evaluateUserAccess(user: UserRecord | null): AccessDecision {
   }
 
   const userEmail = normalizeEmail(user.userEmail);
+  const role = normalizeAccessValue(user.role);
+  const accessStatus = normalizeAccessValue(user.accessStatus);
+  const accessType = normalizeAccessValue(user.accessType);
+  const subscriptionStatus = normalizeAccessValue(user.subscriptionStatus);
   const isEnvAdmin = Boolean(adminEmail() && userEmail === adminEmail());
-  const isAdmin = isEnvAdmin || user.role === "admin" || user.accessType === "admin";
+  const isAdmin = isEnvAdmin || role === "admin" || accessType === "admin";
   const isSuspended =
-    user.role === "suspended" ||
-    user.accessStatus === "suspended" ||
-    user.subscriptionStatus === "suspended";
+    role === "suspended" ||
+    accessStatus === "suspended" ||
+    subscriptionStatus === "suspended";
 
   if (isSuspended) {
     return {
@@ -224,7 +232,7 @@ export function evaluateUserAccess(user: UserRecord | null): AccessDecision {
     };
   }
 
-  if (user.accessStatus !== "active") {
+  if (accessStatus !== "active") {
     return {
       hasAccess: false,
       reason: "User access is inactive.",
@@ -242,7 +250,7 @@ export function evaluateUserAccess(user: UserRecord | null): AccessDecision {
     };
   }
 
-  if (user.accessType === "manual_grant" || user.role === "manual_user") {
+  if (accessType === "manual_grant" || role === "manual_user") {
     return {
       hasAccess: true,
       reason: "Manual access grant.",
@@ -252,8 +260,8 @@ export function evaluateUserAccess(user: UserRecord | null): AccessDecision {
   }
 
   if (
-    user.accessType === "paypal_subscription" &&
-    ["active", "payment_completed"].includes(user.subscriptionStatus)
+    accessType === "paypal_subscription" &&
+    ["active", "payment_completed"].includes(subscriptionStatus)
   ) {
     return {
       hasAccess: true,
@@ -329,11 +337,13 @@ export async function applyPaypalSubscriptionUpdate(input: {
   }
 
   const base = existing ?? emptyUser(userEmail);
+  const baseRole = normalizeAccessValue(base.role);
+  const baseAccessType = normalizeAccessValue(base.accessType);
   const preservedAccess =
-    base.role === "admin" ||
-    base.accessType === "admin" ||
-    base.role === "manual_user" ||
-    base.accessType === "manual_grant";
+    baseRole === "admin" ||
+    baseAccessType === "admin" ||
+    baseRole === "manual_user" ||
+    baseAccessType === "manual_grant";
   const activeStatuses: SubscriptionStatus[] = ["active", "payment_completed"];
   const isPaidActive = activeStatuses.includes(input.subscriptionStatus);
 
