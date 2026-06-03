@@ -7,6 +7,9 @@ import {
   Button,
   Card,
   CardHeader,
+  DataCard,
+  DataCardList,
+  DataCardRow,
   Field,
   Input,
   Select,
@@ -71,7 +74,7 @@ export function AdminUsersManager({
 
   return (
     <div className="grid gap-6 xl:grid-cols-[420px_1fr]">
-      <Card className="p-5">
+      <Card className="p-4 sm:p-5">
         <h2 className="text-base font-semibold text-white">Manual access</h2>
         <div className="mt-5 grid gap-4">
           <Field label="Email">
@@ -134,6 +137,7 @@ export function AdminUsersManager({
           </Field>
           <Button
             type="button"
+            className="w-full"
             disabled={isPending || !form.userEmail}
             onClick={() => save()}
           >
@@ -148,9 +152,99 @@ export function AdminUsersManager({
           title="Users"
           description="Grant manual access, suspend users, change roles, update notes, or remove access."
         />
+        <div className="px-4 pb-4 md:hidden">
+          <DataCardList>
+            {users.map((user) => (
+              <DataCard key={user.userEmail}>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="text-base font-semibold text-white">
+                      {user.fullName || "No name"}
+                    </p>
+                    <p className="mt-1 break-all font-mono text-xs text-slate-500">
+                      {user.userEmail}
+                    </p>
+                  </div>
+                  <Badge tone={user.role === "admin" ? "amber" : "slate"}>{user.role}</Badge>
+                </div>
+                <div className="mt-4 grid gap-3">
+                  <DataCardRow
+                    label="Access"
+                    value={<Badge tone={user.accessStatus === "active" ? "green" : "red"}>{user.accessStatus}</Badge>}
+                  />
+                  <DataCardRow label="Type" value={user.accessType || "none"} />
+                  <DataCardRow label="PayPal" value={user.subscriptionStatus || "none"} />
+                  <DataCardRow label="Notes" value={user.notes || "No notes"} className="items-start" />
+                </div>
+                <div className="mt-4 grid gap-2">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={() =>
+                      save({
+                        ...user,
+                        role: "manual_user",
+                        accessStatus: "active",
+                        accessType: "manual_grant",
+                      })
+                    }
+                  >
+                    Grant
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="danger"
+                    onClick={() =>
+                      save({
+                        ...user,
+                        role: "suspended",
+                        accessStatus: "suspended",
+                      })
+                    }
+                  >
+                    Suspend
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={() =>
+                      save({
+                        ...user,
+                        role: "paid_user",
+                        accessStatus: "inactive",
+                        accessType: "",
+                        notes: `${user.notes} Access removed manually.`.trim(),
+                      })
+                    }
+                  >
+                    Remove access
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={() =>
+                      setForm({
+                        userEmail: user.userEmail,
+                        fullName: user.fullName,
+                        role: user.role,
+                        accessStatus: user.accessStatus,
+                        accessType: user.accessType,
+                        accessExpiresAt: user.accessExpiresAt,
+                        notes: user.notes,
+                      })
+                    }
+                  >
+                    Edit
+                  </Button>
+                </div>
+              </DataCard>
+            ))}
+          </DataCardList>
+        </div>
+
         <TableShell>
           <table className="w-full min-w-[1120px] text-left text-sm">
-            <thead className="border-y border-slate-800 bg-slate-950/80 text-xs uppercase tracking-[0.16em] text-slate-500">
+            <thead className="hidden border-y border-slate-800 bg-slate-950/80 text-xs uppercase tracking-[0.16em] text-slate-500 md:table-header-group">
               <tr>
                 <th className="px-5 py-3">User</th>
                 <th className="px-5 py-3">Role</th>
@@ -160,7 +254,7 @@ export function AdminUsersManager({
                 <th className="px-5 py-3">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800">
+            <tbody className="hidden divide-y divide-slate-800 md:table-row-group">
               {users.map((user) => (
                 <tr key={user.userEmail} className="align-top text-slate-300">
                   <td className="px-5 py-4">

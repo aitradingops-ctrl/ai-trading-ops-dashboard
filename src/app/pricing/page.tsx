@@ -13,13 +13,13 @@ export default async function PricingPage({
   const params = await searchParams;
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top_right,rgba(14,165,233,0.2),transparent_36rem),#020617] px-4 py-10 text-slate-100">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top_right,rgba(14,165,233,0.2),transparent_36rem),#020617] px-4 py-6 text-slate-100 sm:py-10">
       <div className="mx-auto grid w-full max-w-5xl gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <section className="py-8">
+        <section className="py-4 sm:py-8">
           <p className="text-xs uppercase tracking-[0.28em] text-cyan-300">
             {publicConfig.appName} Access
           </p>
-          <h1 className="mt-3 max-w-2xl text-4xl font-semibold tracking-tight text-white">
+          <h1 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             Trading operations access is subscription-based, with admin override.
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-7 text-slate-400">
@@ -41,8 +41,8 @@ export default async function PricingPage({
           ) : null}
         </section>
 
-        <Card className="p-6">
-          <div className="flex items-start justify-between gap-4">
+        <Card className="p-5 sm:p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <Badge tone="blue">Internal Pro</Badge>
               <h2 className="mt-4 text-2xl font-semibold text-white">

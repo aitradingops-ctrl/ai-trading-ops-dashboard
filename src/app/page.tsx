@@ -43,8 +43,8 @@ function LandingButton({
       href={href}
       className={
         variant === "primary"
-          ? "inline-flex min-h-12 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-300 px-6 text-sm font-semibold text-slate-950 shadow-[0_18px_55px_rgba(34,211,238,0.2)] transition hover:-translate-y-0.5 hover:bg-cyan-200 hover:shadow-[0_24px_70px_rgba(34,211,238,0.3)]"
-          : "inline-flex min-h-12 items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-0.5 hover:border-cyan-300/40 hover:bg-cyan-300/10"
+          ? "inline-flex min-h-[48px] w-full items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-300 px-6 text-sm font-semibold text-slate-950 shadow-[0_18px_55px_rgba(34,211,238,0.2)] transition hover:-translate-y-0.5 hover:bg-cyan-200 hover:shadow-[0_24px_70px_rgba(34,211,238,0.3)] sm:w-auto"
+          : "inline-flex min-h-[48px] w-full items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-0.5 hover:border-cyan-300/40 hover:bg-cyan-300/10 sm:w-auto"
       }
     >
       {children}
@@ -102,7 +102,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.045)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(circle_at_top,black,transparent_74%)]" />
       </div>
 
-      <header className="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-6 md:px-8">
+      <header className="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-5 sm:px-5 md:px-8">
         <Link href="/" className="group">
           <div className="text-lg font-semibold tracking-tight text-white">
             {publicConfig.appName}
@@ -138,15 +138,15 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <section className="relative z-10 mx-auto grid w-full max-w-7xl gap-12 px-5 pb-20 pt-14 md:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:pb-28 lg:pt-20">
+      <section className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 px-4 pb-16 pt-10 sm:px-5 md:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:pb-28 lg:pt-20">
         <div>
           <div className="inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200">
             Premium trading process infrastructure
           </div>
-          <h1 className="mt-7 max-w-4xl text-5xl font-semibold tracking-[-0.055em] text-white md:text-7xl">
+          <h1 className="mt-6 max-w-4xl text-[2.5rem] font-semibold tracking-tight text-white sm:text-5xl md:text-7xl">
             AI-Assisted Trading Operations, Built for Discipline.
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 md:text-xl">
+          <p className="mt-5 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8 md:text-xl">
             Track signals, manage risk, journal trades, monitor TradingView
             alerts, and build a repeatable trading process from one clean
             dashboard.
@@ -157,7 +157,7 @@ export default function LandingPage() {
               Subscribe
             </LandingButton>
           </div>
-          <div className="mt-10 grid max-w-2xl gap-3 sm:grid-cols-3">
+          <div className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
             {workflowStats.map((stat) => (
               <div
                 key={stat.label}
@@ -172,7 +172,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <GlassCard className="relative overflow-hidden p-4">
+        <GlassCard className="relative overflow-hidden p-3 sm:p-4">
           <div className="absolute right-6 top-6 h-24 w-24 rounded-full bg-cyan-300/20 blur-2xl" />
           <div className="rounded-[1.45rem] border border-slate-800 bg-slate-950/90 p-4">
             <div className="flex items-center justify-between gap-3 border-b border-slate-800 pb-4">
@@ -200,12 +200,12 @@ export default function LandingPage() {
               ))}
             </div>
 
-            <div className="mt-4 overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+            <div className="mt-4 overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/70 p-3 sm:p-4">
               <div className="mb-4 flex items-center justify-between">
                 <p className="font-mono text-sm text-cyan-200">NASDAQ:AAPL</p>
                 <p className="text-xs text-slate-500">TradingView alert stream</p>
               </div>
-              <div className="flex h-44 items-end gap-1">
+              <div className="flex h-32 items-end gap-1 sm:h-44">
                 {[28, 42, 38, 58, 46, 62, 74, 67, 82, 76, 92, 80, 88, 96, 84, 90, 102, 98].map(
                   (height, index) => (
                     <div
@@ -220,7 +220,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="mt-4 grid gap-3 md:grid-cols-2">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {[
                 ["Signal", "Momentum breakout", "78%"],
                 ["Journal", "Execution review", "Draft"],
@@ -244,7 +244,7 @@ export default function LandingPage() {
         </GlassCard>
       </section>
 
-      <section className="relative z-10 mx-auto max-w-7xl px-5 py-20 md:px-8">
+      <section className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-5 md:px-8 md:py-20">
         <SectionHeading
           eyebrow="What AI Trading Ops Does"
           title="Turn market activity into an operating system."
@@ -264,7 +264,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="features" className="relative z-10 mx-auto max-w-7xl px-5 py-20 md:px-8">
+      <section id="features" className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-5 md:px-8 md:py-20">
         <SectionHeading
           eyebrow="Core Features"
           title="Everything needed to run the trading desk cleanly."
@@ -283,7 +283,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="risk" className="relative z-10 mx-auto grid max-w-7xl gap-5 px-5 py-20 md:px-8 lg:grid-cols-2">
+      <section id="risk" className="relative z-10 mx-auto grid max-w-7xl gap-5 px-4 py-16 sm:px-5 md:px-8 md:py-20 lg:grid-cols-2">
         <GlassCard className="p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-300/80">
             TradingView Integration
@@ -312,7 +312,7 @@ export default function LandingPage() {
         </GlassCard>
       </section>
 
-      <section className="relative z-10 mx-auto grid max-w-7xl gap-5 px-5 py-20 md:px-8 lg:grid-cols-3">
+      <section className="relative z-10 mx-auto grid max-w-7xl gap-5 px-4 py-16 sm:px-5 md:px-8 md:py-20 lg:grid-cols-3">
         {[
           [
             "Trade Journal",
@@ -334,7 +334,7 @@ export default function LandingPage() {
         ))}
       </section>
 
-      <section id="security" className="relative z-10 mx-auto max-w-7xl px-5 py-20 md:px-8">
+      <section id="security" className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-5 md:px-8 md:py-20">
         <GlassCard className="overflow-hidden p-8 md:p-10">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div>
@@ -368,7 +368,7 @@ export default function LandingPage() {
         </GlassCard>
       </section>
 
-      <section className="relative z-10 mx-auto max-w-5xl px-5 py-24 text-center md:px-8">
+      <section className="relative z-10 mx-auto max-w-5xl px-4 py-20 text-center sm:px-5 md:px-8 md:py-24">
         <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-300/80">
           Final call-to-action
         </p>

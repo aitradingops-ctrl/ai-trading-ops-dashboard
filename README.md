@@ -153,6 +153,27 @@ https://chat.google.com/room/AAQA_c_Zwls?cls=7
 7. Add the custom domain `aitradingops.pro` only after the Vercel preview URL has been tested.
 8. After attaching the domain, update `NEXTAUTH_URL=https://aitradingops.pro`, Google OAuth redirects, and PayPal webhook URLs.
 
+## Responsive QA Checklist
+
+Before shipping UI changes, verify these views on the public site and authenticated app:
+
+- `360px` Android width
+- `375px` iPhone 14/15 width
+- `375px` iPhone SE width
+- `768px` tablet width
+- `1280px+` desktop width
+
+Check all of the following at each breakpoint:
+
+- no horizontal scrolling
+- bottom navigation or mobile navigation is reachable on phone widths
+- tap targets are at least `44px`
+- KPI cards stack cleanly on mobile
+- forms use full-width inputs
+- data tables convert to readable mobile cards
+- TradingView charts fit the viewport width and remain usable
+- pricing CTAs remain visible without pinch-zooming
+
 ## Manual User Access
 
 Set `APP_ADMIN_EMAIL=aitradingops@gmail.com`. That user is bootstrapped as admin on first login, by `npm run seed`, or automatically if the `Users` tab is empty.

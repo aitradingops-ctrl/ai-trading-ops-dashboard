@@ -7,6 +7,9 @@ import {
   Button,
   Card,
   CardHeader,
+  DataCard,
+  DataCardList,
+  DataCardRow,
   Field,
   Input,
   Select,
@@ -76,7 +79,7 @@ export function TradesManager({ initialTrades }: { initialTrades: Trade[] }) {
         title="Trade journal table"
         description="Track planned, open, and closed trades. Execution is intentionally out of scope."
       />
-      <div className="grid gap-4 p-5 md:grid-cols-4">
+      <div className="grid gap-4 p-4 sm:p-5 md:grid-cols-2 xl:grid-cols-4">
         <Field label="Date">
           <Input
             type="date"
@@ -152,17 +155,58 @@ export function TradesManager({ initialTrades }: { initialTrades: Trade[] }) {
             />
           </Field>
         </div>
-        <div className="flex items-center gap-3 md:col-span-4">
-          <Button type="button" disabled={isPending || !form.ticker} onClick={submit}>
+        <div className="flex flex-col gap-3 md:col-span-2 xl:col-span-4 sm:flex-row sm:items-center">
+          <Button
+            type="button"
+            className="w-full sm:w-auto"
+            disabled={isPending || !form.ticker}
+            onClick={submit}
+          >
             {isPending ? "Saving..." : "Save trade"}
           </Button>
           {message ? <p className="text-sm text-rose-300">{message}</p> : null}
         </div>
       </div>
 
+      <div className="px-4 pb-4 md:hidden">
+        <DataCardList>
+          {trades.map((trade) => (
+            <DataCard key={trade.tradeId}>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="font-mono text-base font-semibold text-cyan-200">
+                    {trade.ticker}
+                  </p>
+                  <p className="mt-1 text-sm text-slate-500">{trade.date}</p>
+                </div>
+                <Badge tone={trade.status === "open" ? "green" : "slate"}>
+                  {trade.status}
+                </Badge>
+              </div>
+              <div className="mt-4 grid gap-3">
+                <DataCardRow label="Direction" value={trade.direction} />
+                <DataCardRow label="Entry" value={trade.entry} />
+                <DataCardRow label="Stop" value={trade.stopLoss} />
+                <DataCardRow label="Target" value={trade.target} />
+                <DataCardRow label="Exit" value={trade.exit || "Open"} />
+                <DataCardRow
+                  label="P/L"
+                  value={
+                    <span className={Number(trade.pnl) >= 0 ? "text-emerald-300" : "text-rose-300"}>
+                      {formatCurrency(trade.pnl)}
+                    </span>
+                  }
+                />
+                <DataCardRow label="Lesson" value={trade.lesson || "No lesson recorded"} className="items-start" />
+              </div>
+            </DataCard>
+          ))}
+        </DataCardList>
+      </div>
+
       <TableShell>
         <table className="w-full min-w-[980px] text-left text-sm">
-          <thead className="border-y border-slate-800 bg-slate-950/80 text-xs uppercase tracking-[0.16em] text-slate-500">
+          <thead className="hidden border-y border-slate-800 bg-slate-950/80 text-xs uppercase tracking-[0.16em] text-slate-500 md:table-header-group">
             <tr>
               <th className="px-5 py-3">Date</th>
               <th className="px-5 py-3">Ticker</th>
@@ -176,7 +220,7 @@ export function TradesManager({ initialTrades }: { initialTrades: Trade[] }) {
               <th className="px-5 py-3">Lesson</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800">
+          <tbody className="hidden divide-y divide-slate-800 md:table-row-group">
             {trades.map((trade) => (
               <tr key={trade.tradeId} className="text-slate-300">
                 <td className="px-5 py-4 text-slate-500">{trade.date}</td>

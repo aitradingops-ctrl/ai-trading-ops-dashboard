@@ -35,7 +35,7 @@ export default async function AdminUsersPage() {
             href={publicConfig.projectDriveUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex min-h-10 items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+            className="inline-flex min-h-[44px] w-full items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 md:w-auto"
           >
             Open Project Drive
           </a>

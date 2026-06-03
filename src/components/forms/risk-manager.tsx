@@ -2,7 +2,19 @@
 
 import { useState, useTransition } from "react";
 
-import { Badge, Button, Card, CardHeader, Field, Input, TableShell, Textarea } from "@/components/ui";
+import {
+  Badge,
+  Button,
+  Card,
+  CardHeader,
+  DataCard,
+  DataCardList,
+  DataCardRow,
+  Field,
+  Input,
+  TableShell,
+  Textarea,
+} from "@/components/ui";
 import { formatDateTime } from "@/lib/utils";
 import type { RiskLog, Trade } from "@/types/models";
 
@@ -67,7 +79,7 @@ export function RiskManager({
 
   return (
     <div className="grid gap-6 xl:grid-cols-[420px_1fr]">
-      <Card className="p-5">
+      <Card className="p-4 sm:p-5">
         <h2 className="text-base font-semibold text-white">Current risk status</h2>
         <div className="mt-5 grid gap-3">
           <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
@@ -106,7 +118,7 @@ export function RiskManager({
           title="Risk log"
           description="Update exposure, daily loss, max risk per trade, open positions, and warnings."
         />
-        <div className="grid gap-4 p-5 md:grid-cols-3">
+        <div className="grid gap-4 p-4 sm:p-5 md:grid-cols-2 xl:grid-cols-3">
           <Field label="Exposure">
             <Input
               value={form.exposure}
@@ -146,17 +158,41 @@ export function RiskManager({
               />
             </Field>
           </div>
-          <div className="flex items-center gap-3 md:col-span-3">
-            <Button type="button" disabled={isPending} onClick={submit}>
+          <div className="flex flex-col gap-3 md:col-span-2 xl:col-span-3 sm:flex-row sm:items-center">
+            <Button type="button" className="w-full sm:w-auto" disabled={isPending} onClick={submit}>
               {isPending ? "Saving..." : "Save risk log"}
             </Button>
             {message ? <p className="text-sm text-rose-300">{message}</p> : null}
           </div>
         </div>
 
+        <div className="px-4 pb-4 md:hidden">
+          <DataCardList>
+            {logs.map((log) => (
+              <DataCard key={log.riskId}>
+                <div className="flex items-start justify-between gap-3">
+                  <p className="text-sm font-semibold text-white">
+                    {formatDateTime(log.timestamp)}
+                  </p>
+                  <Badge tone={log.status === "stable" ? "green" : "amber"}>
+                    {log.status}
+                  </Badge>
+                </div>
+                <div className="mt-4 grid gap-3">
+                  <DataCardRow label="Exposure" value={log.exposure} />
+                  <DataCardRow label="Daily loss" value={<span className="text-rose-300">{log.dailyLoss}</span>} />
+                  <DataCardRow label="Max risk" value={log.maxRiskPerTrade} />
+                  <DataCardRow label="Open positions" value={log.openPositions} />
+                  <DataCardRow label="Warnings" value={log.warnings || "None"} className="items-start" />
+                </div>
+              </DataCard>
+            ))}
+          </DataCardList>
+        </div>
+
         <TableShell>
           <table className="w-full min-w-[760px] text-left text-sm">
-            <thead className="border-y border-slate-800 bg-slate-950/80 text-xs uppercase tracking-[0.16em] text-slate-500">
+            <thead className="hidden border-y border-slate-800 bg-slate-950/80 text-xs uppercase tracking-[0.16em] text-slate-500 md:table-header-group">
               <tr>
                 <th className="px-5 py-3">Time</th>
                 <th className="px-5 py-3">Exposure</th>
@@ -166,7 +202,7 @@ export function RiskManager({
                 <th className="px-5 py-3">Warnings</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800">
+            <tbody className="hidden divide-y divide-slate-800 md:table-row-group">
               {logs.map((log) => (
                 <tr key={log.riskId} className="text-slate-300">
                   <td className="px-5 py-4 text-slate-500">

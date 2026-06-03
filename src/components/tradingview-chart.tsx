@@ -8,7 +8,7 @@ interface TradingViewChartProps {
   symbol: string;
   theme?: "dark" | "light";
   interval?: string;
-  height?: number;
+  height?: number | string;
   className?: string;
 }
 
@@ -24,7 +24,7 @@ export function TradingViewChart({
   symbol,
   theme = "dark",
   interval = "D",
-  height = 520,
+  height = "clamp(320px, 62vh, 520px)",
   className,
 }: TradingViewChartProps) {
   const generatedId = useId().replace(/[^a-zA-Z0-9_-]/g, "");
@@ -143,7 +143,7 @@ export function TradingViewWatchlistWidget({
       showChart: false,
       locale: "en",
       width: "100%",
-      height: "420",
+      height: "380",
       isTransparent: true,
       showSymbolLogo: true,
       tabs: [
@@ -164,5 +164,5 @@ export function TradingViewWatchlistWidget({
     };
   }, [symbols, theme]);
 
-  return <div ref={containerRef} className="min-h-[420px]" />;
+  return <div ref={containerRef} className="min-h-[380px] sm:min-h-[420px]" />;
 }

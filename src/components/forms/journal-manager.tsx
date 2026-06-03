@@ -2,7 +2,19 @@
 
 import { useState, useTransition } from "react";
 
-import { Badge, Button, Card, CardHeader, Field, Input, TableShell, Textarea } from "@/components/ui";
+import {
+  Badge,
+  Button,
+  Card,
+  CardHeader,
+  DataCard,
+  DataCardList,
+  DataCardRow,
+  Field,
+  Input,
+  TableShell,
+  Textarea,
+} from "@/components/ui";
 import type { JournalEntry } from "@/types/models";
 
 const today = new Date().toISOString().slice(0, 10);
@@ -61,7 +73,7 @@ export function JournalManager({
 
   return (
     <div className="grid gap-6 xl:grid-cols-[420px_1fr]">
-      <Card className="p-5">
+      <Card className="p-4 sm:p-5">
         <h2 className="text-base font-semibold text-white">Post-trade notes</h2>
         <div className="mt-5 grid gap-4">
           <Field label="Date">
@@ -102,7 +114,12 @@ export function JournalManager({
             AI summary placeholder is stored now. Autonomous trade execution is
             intentionally not implemented.
           </div>
-          <Button type="button" disabled={isPending || !form.ticker} onClick={submit}>
+          <Button
+            type="button"
+            className="w-full"
+            disabled={isPending || !form.ticker}
+            onClick={submit}
+          >
             {isPending ? "Saving..." : "Save journal entry"}
           </Button>
           {message ? <p className="text-sm text-rose-300">{message}</p> : null}
@@ -114,9 +131,32 @@ export function JournalManager({
           title="Journal"
           description="Structured trade reflections with future AI summary slot."
         />
+        <div className="px-4 pb-4 md:hidden">
+          <DataCardList>
+            {entries.map((entry) => (
+              <DataCard key={entry.journalId}>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="font-mono text-base font-semibold text-cyan-200">
+                      {entry.ticker}
+                    </p>
+                    <p className="mt-1 text-sm text-slate-500">{entry.date}</p>
+                  </div>
+                  <Badge tone="slate">{entry.tags || "untagged"}</Badge>
+                </div>
+                <div className="mt-4 grid gap-3">
+                  <DataCardRow label="Category" value={entry.category} />
+                  <DataCardRow label="Notes" value={entry.content} className="items-start" />
+                  <DataCardRow label="AI summary" value={entry.aiSummary} className="items-start" />
+                </div>
+              </DataCard>
+            ))}
+          </DataCardList>
+        </div>
+
         <TableShell>
           <table className="w-full min-w-[920px] text-left text-sm">
-            <thead className="border-y border-slate-800 bg-slate-950/80 text-xs uppercase tracking-[0.16em] text-slate-500">
+            <thead className="hidden border-y border-slate-800 bg-slate-950/80 text-xs uppercase tracking-[0.16em] text-slate-500 md:table-header-group">
               <tr>
                 <th className="px-5 py-3">Date</th>
                 <th className="px-5 py-3">Ticker</th>
@@ -126,7 +166,7 @@ export function JournalManager({
                 <th className="px-5 py-3">AI summary</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800">
+            <tbody className="hidden divide-y divide-slate-800 md:table-row-group">
               {entries.map((entry) => (
                 <tr key={entry.journalId} className="align-top text-slate-300">
                   <td className="px-5 py-4 text-slate-500">{entry.date}</td>

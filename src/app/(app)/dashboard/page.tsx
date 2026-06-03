@@ -1,7 +1,7 @@
 import { DashboardChartPanel } from "@/components/forms/dashboard-chart-panel";
 import { MetricCard } from "@/components/metric-card";
 import { PageHeading } from "@/components/page-heading";
-import { Badge, Card, CardHeader, TableShell } from "@/components/ui";
+import { Badge, Card, CardHeader, DataCard, DataCardList, DataCardRow, TableShell } from "@/components/ui";
 import { requirePageAccess } from "@/lib/page-guards";
 import { publicConfig } from "@/lib/public-config";
 import { getUserSettings } from "@/lib/settings-service";
@@ -27,7 +27,7 @@ export default async function DashboardPage() {
         description="KPIs, current risk status, latest signals, alerts, open trades, project resources, and a TradingView chart configured from your settings."
       />
 
-      <div className="mb-6 grid gap-4 md:grid-cols-3">
+      <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <Card className="p-5">
           <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
             Quick action
@@ -142,7 +142,7 @@ export default async function DashboardPage() {
                 <p className="text-sm leading-6 text-slate-400">
                   {snapshot.latestRisk.warnings}
                 </p>
-                <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="grid gap-3 text-sm sm:grid-cols-2">
                   <div className="rounded-xl bg-slate-950 p-3">
                     <p className="text-slate-500">Daily loss</p>
                     <p className="mt-1 font-semibold text-rose-300">
@@ -189,11 +189,29 @@ export default async function DashboardPage() {
 
       <div className="mt-6 grid gap-6 xl:grid-cols-2">
         {visibleWidgets.includes("signals") ? (
-          <Card>
-            <CardHeader title="Latest signals" description="Most recent signal rows." />
+            <Card>
+              <CardHeader title="Latest signals" description="Most recent signal rows." />
+              <div className="p-4 md:hidden">
+                <DataCardList>
+                  {snapshot.signals.slice(0, 6).map((signal) => (
+                    <DataCard key={signal.signalId}>
+                      <div className="flex items-start justify-between gap-3">
+                        <p className="font-mono text-base font-semibold text-cyan-200">
+                          {signal.ticker}
+                        </p>
+                        <Badge tone="slate">{signal.status}</Badge>
+                      </div>
+                      <div className="mt-4 grid gap-3">
+                        <DataCardRow label="Direction" value={signal.direction} />
+                        <DataCardRow label="Confidence" value={signal.confidenceScore} />
+                      </div>
+                    </DataCard>
+                  ))}
+                </DataCardList>
+              </div>
             <TableShell>
               <table className="w-full min-w-[620px] text-left text-sm">
-                <thead className="border-y border-slate-800 bg-slate-950/80 text-xs uppercase tracking-[0.16em] text-slate-500">
+                <thead className="hidden border-y border-slate-800 bg-slate-950/80 text-xs uppercase tracking-[0.16em] text-slate-500 md:table-header-group">
                   <tr>
                     <th className="px-5 py-3">Ticker</th>
                     <th className="px-5 py-3">Direction</th>
@@ -201,7 +219,7 @@ export default async function DashboardPage() {
                     <th className="px-5 py-3">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800">
+                <tbody className="hidden divide-y divide-slate-800 md:table-row-group">
                   {snapshot.signals.slice(0, 6).map((signal) => (
                     <tr key={signal.signalId} className="text-slate-300">
                       <td className="px-5 py-4 font-mono text-cyan-200">
@@ -223,9 +241,28 @@ export default async function DashboardPage() {
         {visibleWidgets.includes("openTrades") ? (
           <Card>
             <CardHeader title="Open trades" description="Open positions from Trades." />
+            <div className="p-4 md:hidden">
+              <DataCardList>
+                {snapshot.openTrades.map((trade) => (
+                  <DataCard key={trade.tradeId}>
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="font-mono text-base font-semibold text-cyan-200">
+                        {trade.ticker}
+                      </p>
+                      <Badge tone="green">Open</Badge>
+                    </div>
+                    <div className="mt-4 grid gap-3">
+                      <DataCardRow label="Entry" value={trade.entry} />
+                      <DataCardRow label="Stop" value={trade.stopLoss} />
+                      <DataCardRow label="Target" value={trade.target} />
+                    </div>
+                  </DataCard>
+                ))}
+              </DataCardList>
+            </div>
             <TableShell>
               <table className="w-full min-w-[640px] text-left text-sm">
-                <thead className="border-y border-slate-800 bg-slate-950/80 text-xs uppercase tracking-[0.16em] text-slate-500">
+                <thead className="hidden border-y border-slate-800 bg-slate-950/80 text-xs uppercase tracking-[0.16em] text-slate-500 md:table-header-group">
                   <tr>
                     <th className="px-5 py-3">Ticker</th>
                     <th className="px-5 py-3">Entry</th>
@@ -233,7 +270,7 @@ export default async function DashboardPage() {
                     <th className="px-5 py-3">Target</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800">
+                <tbody className="hidden divide-y divide-slate-800 md:table-row-group">
                   {snapshot.openTrades.map((trade) => (
                     <tr key={trade.tradeId} className="text-slate-300">
                       <td className="px-5 py-4 font-mono text-cyan-200">

@@ -15,7 +15,7 @@ export default function CalendarPage() {
             href={publicConfig.tradingCalendarUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex min-h-10 items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+            className="inline-flex min-h-[44px] w-full items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 sm:w-auto"
           >
             Open in Google Calendar
           </a>
@@ -40,7 +40,7 @@ export default function CalendarPage() {
           <iframe
             title={`${publicConfig.appName} Trading Calendar`}
             src={getTradingCalendarEmbedUrl()}
-            className="h-[72vh] min-h-[620px] w-full rounded-xl border border-slate-800 bg-white"
+            className="h-[65vh] min-h-[480px] w-full rounded-xl border border-slate-800 bg-white sm:h-[72vh] sm:min-h-[620px]"
           />
         </div>
       </Card>

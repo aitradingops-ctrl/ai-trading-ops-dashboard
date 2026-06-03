@@ -90,7 +90,7 @@ export function Button({
   return (
     <button
       className={cn(
-        "inline-flex min-h-10 items-center justify-center rounded-xl border px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+        "inline-flex min-h-[44px] items-center justify-center rounded-xl border px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
         variants[variant],
         className,
       )}
@@ -108,7 +108,7 @@ export function Input({
   return (
     <input
       className={cn(
-        "min-h-10 w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/10",
+        "min-h-[44px] w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/10",
         className,
       )}
       {...props}
@@ -123,7 +123,7 @@ export function Select({
   return (
     <select
       className={cn(
-        "min-h-10 w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none transition focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/10",
+        "min-h-[44px] w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-slate-100 outline-none transition focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/10",
         className,
       )}
       {...props}
@@ -138,7 +138,7 @@ export function Textarea({
   return (
     <textarea
       className={cn(
-        "min-h-24 w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/10",
+        "min-h-24 w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/10",
         className,
       )}
       {...props}
@@ -168,4 +168,41 @@ export function EmptyState({ children }: PropsWithChildren) {
 
 export function TableShell({ children }: PropsWithChildren) {
   return <div className="overflow-x-auto">{children}</div>;
+}
+
+export function DataCardList({ children, className }: PropsWithChildren<{ className?: string }>) {
+  return <div className={cn("grid gap-3", className)}>{children}</div>;
+}
+
+export function DataCard({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) {
+  return (
+    <div
+      className={cn(
+        "rounded-2xl border border-slate-800 bg-slate-950/80 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function DataCardRow({
+  label,
+  value,
+  className,
+}: {
+  label: string;
+  value: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn("flex items-start justify-between gap-4", className)}>
+      <span className="text-xs uppercase tracking-[0.16em] text-slate-500">{label}</span>
+      <div className="text-right text-sm text-slate-200">{value}</div>
+    </div>
+  );
 }

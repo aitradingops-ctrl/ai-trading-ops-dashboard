@@ -11,13 +11,13 @@ export default async function LoginPage({
   const isRestricted = params.restricted === "1" || params.error === "AccessDenied";
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,rgba(8,145,178,0.22),transparent_34rem),#020617] px-4 py-10 text-slate-100">
-      <Card className="w-full max-w-md p-8">
-        <div className="mb-8">
+    <main className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,rgba(8,145,178,0.22),transparent_34rem),#020617] px-4 py-6 text-slate-100 sm:py-10">
+      <Card className="w-full max-w-md p-6 sm:p-8">
+        <div className="mb-6 sm:mb-8">
           <p className="text-xs uppercase tracking-[0.28em] text-cyan-300">
             {publicConfig.appName}
           </p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white">
+          <h1 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
             Sign in to the operations dashboard
           </h1>
           <p className="mt-3 text-sm leading-6 text-slate-400">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { PropsWithChildren } from "react";
 
+import { MobileBottomNav } from "@/components/mobile-bottom-nav";
 import { Badge } from "@/components/ui";
 import { SignOutButton } from "@/components/sign-out-button";
 import type { AccessContext } from "@/lib/access-control";
@@ -26,7 +27,7 @@ export function AppShell({
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(8,145,178,0.16),transparent_32rem),linear-gradient(135deg,#020617_0%,#0f172a_45%,#111827_100%)] text-slate-100">
       <div className="mx-auto flex min-h-screen w-full max-w-[1600px] flex-col lg:flex-row">
         <aside className="border-b border-slate-800/80 bg-slate-950/70 px-4 py-4 backdrop-blur lg:min-h-screen lg:w-72 lg:border-b-0 lg:border-r lg:px-5">
-          <div className="flex items-center justify-between gap-4 lg:block">
+          <div className="flex items-start justify-between gap-4 lg:block">
             <Link href="/dashboard" className="block">
               <div className="text-lg font-semibold tracking-tight text-white">
                 {publicConfig.appName}
@@ -35,12 +36,22 @@ export function AppShell({
                 {publicConfig.appDomain}
               </div>
             </Link>
-            <div className="lg:hidden">
-              <SignOutButton />
+            <div className="min-w-0 lg:hidden">
+              <p className="truncate text-right text-sm font-semibold text-white">
+                {context.user.fullName || context.sessionUser.name || "Operator"}
+              </p>
+              <p className="truncate text-right text-xs text-slate-500">
+                {context.sessionUser.email}
+              </p>
+              <div className="mt-2 flex justify-end gap-2">
+                <Badge tone={context.decision.isAdmin ? "amber" : "green"}>
+                  {context.user.role}
+                </Badge>
+              </div>
             </div>
           </div>
 
-          <nav className="mt-6 flex gap-2 overflow-x-auto lg:flex-col lg:overflow-visible">
+          <nav className="mt-6 hidden gap-2 overflow-x-auto lg:flex lg:flex-col lg:overflow-visible">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -88,8 +99,15 @@ export function AppShell({
           </div>
         </aside>
 
-        <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">{children}</main>
+        <main className="flex-1 px-4 py-5 pb-28 sm:px-6 sm:py-6 sm:pb-32 lg:px-8 lg:pb-8">
+          {children}
+        </main>
       </div>
+      <MobileBottomNav
+        isAdmin={context.decision.isAdmin}
+        projectDriveUrl={publicConfig.projectDriveUrl}
+        googleChatUrl={publicConfig.googleChatUrl}
+      />
     </div>
   );
 }

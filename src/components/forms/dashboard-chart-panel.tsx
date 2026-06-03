@@ -26,11 +26,16 @@ export function DashboardChartPanel({
           placeholder="NASDAQ:AAPL"
           aria-label="TradingView symbol"
         />
-        <Button type="button" onClick={() => setSymbol(draft)}>
+        <Button type="button" onClick={() => setSymbol(draft)} className="w-full sm:w-auto">
           View ticker
         </Button>
       </div>
-      <TradingViewChart symbol={symbol} theme={theme} interval={interval} />
+      <TradingViewChart
+        symbol={symbol}
+        theme={theme}
+        interval={interval}
+        height="clamp(320px, 56vh, 520px)"
+      />
     </div>
   );
 }

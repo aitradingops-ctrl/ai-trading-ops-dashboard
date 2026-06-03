@@ -55,7 +55,7 @@ export function SettingsForm({
           title="User customization"
           description={`Settings are saved by signed-in email: ${userEmail}`}
         />
-        <div className="grid gap-4 p-5 md:grid-cols-2">
+        <div className="grid gap-4 p-4 sm:p-5 md:grid-cols-2">
           <Field label="Preferred watchlist tickers">
             <Input
               value={settings.preferredWatchlistTickers}
@@ -171,8 +171,13 @@ export function SettingsForm({
               />
             </Field>
           </div>
-          <div className="flex items-center gap-3 md:col-span-2">
-            <Button type="button" disabled={isPending} onClick={() => save(false)}>
+          <div className="flex flex-col gap-3 md:col-span-2 sm:flex-row sm:items-center">
+            <Button
+              type="button"
+              className="w-full sm:w-auto"
+              disabled={isPending}
+              onClick={() => save(false)}
+            >
               {isPending ? "Saving..." : "Save settings"}
             </Button>
             {message ? <p className="text-sm text-emerald-300">{message}</p> : null}
@@ -180,7 +185,7 @@ export function SettingsForm({
         </div>
       </Card>
 
-      <Card className="p-5">
+      <Card className="p-4 sm:p-5">
         <h2 className="text-base font-semibold text-white">
           TradingView alert webhook
         </h2>
@@ -198,6 +203,7 @@ export function SettingsForm({
           <Button
             type="button"
             variant="secondary"
+            className="w-full"
             disabled={isPending}
             onClick={() => save(true)}
           >
