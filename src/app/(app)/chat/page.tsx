@@ -34,6 +34,14 @@ export default function ChatPage() {
           and permissions directly. Use the same Google account that has access
           to the shared Chat space.
         </p>
+        <div className="mt-5 rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
+          <p className="text-sm font-semibold text-white">If the space does not appear</p>
+          <ul className="mt-3 grid gap-2 text-sm leading-6 text-slate-400">
+            <li>1. Open Chat with the same Gmail you used to sign into AI Trading Ops.</li>
+            <li>2. The Gmail account must be invited to the Chat space by its owner.</li>
+            <li>3. In a new InPrivate tab, Google will not remember prior account selection.</li>
+          </ul>
+        </div>
         <a
           href={publicConfig.googleChatUrl}
           target="_blank"
@@ -42,6 +50,7 @@ export default function ChatPage() {
         >
           Open Google Chat
         </a>
+        <p className="mt-3 break-all text-xs text-slate-500">{publicConfig.googleChatUrl}</p>
       </Card>
     </>
   );

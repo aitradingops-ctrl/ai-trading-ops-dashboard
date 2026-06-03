@@ -37,6 +37,12 @@ export default function CalendarPage() {
               Month view
             </span>
           </div>
+          <div className="mb-3 rounded-2xl border border-slate-800 bg-slate-900/80 p-4 text-sm leading-6 text-slate-400">
+            If Google shows a `403` here, this Google account does not currently
+            have permission to view the shared calendar. In that case, open it in
+            Google Calendar and share the calendar with this exact Gmail account,
+            or make the calendar public if that is acceptable for your workflow.
+          </div>
           <iframe
             title={`${publicConfig.appName} Trading Calendar`}
             src={getTradingCalendarEmbedUrl()}
